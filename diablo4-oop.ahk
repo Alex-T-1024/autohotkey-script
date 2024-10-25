@@ -1,7 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 #SingleInstance Force
 
-SetKeyDelay 30, 40
+SetKeyDelay 10, 10
 
 class AutoSpam {
     __New(Spam, Interval) {
@@ -43,7 +43,7 @@ AttackSpam() {
     if (State) {
         Sleep 1000
     } else {
-        SendEvent "234{RButton}"
+        SendEvent "1234{RButton}"
     }
 }
 
@@ -52,7 +52,7 @@ PotionSpam() {
     if (State) {
         Sleep 1000
     } else {
-        SendEvent "Q{LButton}"
+        SendEvent "Q"
     }
 }
 
@@ -60,17 +60,17 @@ SpaceSpam() {
     SendEvent "{Space}"
 }
 
-AutoAtk := AutoSpam(AttackSpam, 150)
-AutoPotion := AutoSpam(PotionSpam, 3500)
+AutoAtk := AutoSpam(AttackSpam, 20)
+AutoPotion := AutoSpam(PotionSpam, 9000)
 AutoSpace := AutoSpam(SpaceSpam, 300)
 
-F6::
+F1::
 {
     AutoAtk.Toggle
-    AutoPotion.Toggle
+    ; AutoPotion.Toggle
 }
 
-F7::
+F2::
 {
     AutoSpace.Toggle
 }
