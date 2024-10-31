@@ -1,4 +1,8 @@
-﻿#Requires AutoHotkey v2.0
+﻿/*
+Deprecated.
+Please use other scripts.
+*/
+#Requires AutoHotkey v2.0
 
 #SingleInstance Force
 HotIfWinActive "ahk_class Diablo IV Main Window Class"
