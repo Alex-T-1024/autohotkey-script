@@ -3,6 +3,8 @@
 
 SetKeyDelay 10, 10
 
+AppClassName := "Diablo IV Main Window Class"
+
 class AutoSpam {
     __New(Spam, Interval) {
         this.Func := Spam
@@ -30,11 +32,23 @@ class AutoSpam {
     }
 
     Toggle() {
+        this.CheckExist()
         if (this.StartFlag) {
             this.Stop()
         } else {
             this.Start()
         }
+    }
+
+    CheckExist() {
+        global AppClassName
+        ;MsgBox "Checking if app is running"
+        if (WinExist("ahk_class" AppClassName) == 0) {
+            ;MsgBox "App is not running, exiting"
+            SoundBeep(300, 800)
+            ExitApp
+        }
+        return true
     }
 }
 
@@ -73,6 +87,7 @@ F1::
 F2::
 {
     AutoSpace.Toggle
+    AutoPotion.Toggle
 }
 
 Enter::
