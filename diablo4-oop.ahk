@@ -1,4 +1,14 @@
-﻿#Requires AutoHotkey v2.0
+﻿/*
+Used for Diablo 4 to autocast
+Features:
+1. Automatically cast skills and/or drinking potion or evade
+2. Stop autocasting while walking
+3. Press shortcut when game is not running will exit ahk script
+4. When game is not active, it will stop sending keystrokes
+5. Only one scripting instance can be running simultaneously
+5. You can change to other apps using `AppClassName` and define your own keystrokes
+*/
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 
 SetKeyDelay 10, 10
@@ -7,15 +17,19 @@ AppClassName := "Diablo IV Main Window Class"
 
 class AutoSpam {
     __New(Spam, Interval) {
-        this.Func := Spam
+        this.SpamFunc := Spam
+
+        this.Timer := this.WrapFunc.Bind(this)
+        ; or use below
+        ; this.Timer := ObjBindMethod(this, "WrapFunc")
     }
     StartFlag := false
     Interval := 100
-    Func := () => {}
+    SpamFunc := () => {}
 
     Start() {
         this.StartFlag := true
-        SetTimer this.Func, this.Interval
+        SetTimer this.Timer, this.Interval
         ;MsgBox "StartFlag is true"
         SoundBeep(1000, 200)
     }
@@ -27,7 +41,7 @@ class AutoSpam {
 
     StopNoBeep() {
         this.StartFlag := false
-        SetTimer this.Func, 0
+        SetTimer this.Timer, 0
         ;MsgBox "StartFlag is false"
     }
 
@@ -49,6 +63,24 @@ class AutoSpam {
             ExitApp
         }
         return true
+    }
+
+    IsActive() {
+        ; result := WinActive("ahk_class" AppClassName)
+        ; MsgBox result
+
+        if (WinActive("ahk_class" AppClassName) == 0) {
+            return false
+        }
+        return true
+    }
+
+    WrapFunc() {
+        if (this.IsActive()) {
+            this.SpamFunc.Call()
+        } else {
+            Sleep 2000
+        }
     }
 }
 
