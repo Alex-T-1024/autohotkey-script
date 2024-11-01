@@ -4,7 +4,7 @@ Features:
 1. Automatically cast skills and/or drinking potion or evade
 2. Stop autocasting while walking
 3. Press shortcut when game is not running will exit ahk script
-4. When game is not active, it will stop sending keystrokes
+4. Automatically pause/resume keystrokes when you lose/get game focus
 5. Only one scripting instance can be running simultaneously
 5. You can change to other apps using `AppClassName` and define your own keystrokes
 */
